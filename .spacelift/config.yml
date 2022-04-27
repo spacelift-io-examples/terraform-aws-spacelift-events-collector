@@ -1,0 +1,6 @@
+version: 1
+module_version: 0.1.2
+
+tests:
+  - name: Default values
+    project_root: examples/defaults
