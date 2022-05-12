@@ -1,3 +1,8 @@
+locals {
+  courier_name = "spacelift-events-collector-courier-${random_string.suffix.result}"
+  stream_name  = "spacelift-events-collector-stream-${random_string.suffix.result}"
+}
+
 resource "random_string" "suffix" {
   length  = 8
   lower   = true
@@ -17,7 +22,7 @@ data "archive_file" "lambda_function" {
 
 resource "aws_lambda_function" "courier" {
   filename         = data.archive_file.lambda_function.output_path
-  function_name    = "spacelift-events-collector-courier-${random_string.suffix.result}"
+  function_name    = local.courier_name
   handler          = "function.handler"
   role             = aws_iam_role.courier.arn
   runtime          = "python3.9"
@@ -38,7 +43,7 @@ resource "aws_lambda_function_url" "courier" {
 }
 
 resource "aws_iam_role" "courier" {
-  name = "spacelift-events-collector-courier-${random_string.suffix.result}"
+  name = local.courier_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -72,7 +77,7 @@ resource "aws_iam_role_policy" "courier" {
 }
 
 resource "aws_cloudwatch_log_group" "courier" {
-  name              = "/aws/lambda/${aws_lambda_function.courier.function_name}"
+  name              = "/aws/lambda/${local.courier_name}"
   retention_in_days = var.logs_retention_days
 }
 
@@ -85,7 +90,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution_role" {
 # Stream
 ##################################################
 resource "aws_cloudwatch_log_group" "stream" {
-  name              = "/aws/kinesisfirehose/spacelift-events-collector-stream-${random_string.suffix.result}"
+  name              = "/aws/kinesisfirehose/${local.stream_name}}"
   retention_in_days = var.logs_retention_days
 }
 
@@ -96,7 +101,7 @@ resource "aws_cloudwatch_log_stream" "destination_delivery" {
 
 resource "aws_kinesis_firehose_delivery_stream" "stream" {
   destination = "extended_s3"
-  name        = "spacelift-events-collector-stream-${random_string.suffix.result}"
+  name        = local.stream_name
 
   extended_s3_configuration {
     buffer_interval     = var.buffer_interval
@@ -122,7 +127,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
 }
 
 resource "aws_iam_role" "stream" {
-  name = "spacelift-events-collector-stream-${random_string.suffix.result}"
+  name = local.stream_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
