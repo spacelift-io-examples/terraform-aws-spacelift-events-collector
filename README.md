@@ -29,6 +29,7 @@ The main resources for this module are:
 
 | Name | Version |
 |------|---------|
+| archive | ~> 2.2 |
 | aws | >= 4.9.0 |
 | random | ~> 3.1 |
 

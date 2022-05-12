@@ -90,7 +90,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution_role" {
 # Stream
 ##################################################
 resource "aws_cloudwatch_log_group" "stream" {
-  name              = "/aws/kinesisfirehose/${local.stream_name}}"
+  name              = "/aws/kinesisfirehose/${local.stream_name}"
   retention_in_days = var.logs_retention_days
 }
 
