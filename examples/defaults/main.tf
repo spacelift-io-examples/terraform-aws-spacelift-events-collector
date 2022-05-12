@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "collector" {
-  source = "github.com/spacelift-io-examples/terraform-aws-spacelift-events-collector"
+  source = "../.."
 
   delete_events_when_destroying_stack = true # Required for the automated tests to succeed
 }
