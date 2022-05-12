@@ -37,5 +37,6 @@ variable "logs_verbose" {
 variable "secret" {
   default     = ""
   description = "Secret to be expected by the collector"
+  sensitive   = true
   type        = string
 }
