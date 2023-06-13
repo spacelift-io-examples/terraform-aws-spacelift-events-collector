@@ -6,11 +6,6 @@ resource "aws_s3_bucket" "storage" {
   bucket = "spacelift-events-${random_string.suffix.result}"
 }
 
-resource "aws_s3_bucket_acl" "storage" {
-  acl    = "private"
-  bucket = aws_s3_bucket.storage.id
-}
-
 resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
   bucket = aws_s3_bucket.storage.id
 
