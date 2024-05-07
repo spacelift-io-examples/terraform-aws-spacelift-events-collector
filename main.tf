@@ -104,8 +104,8 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
   name        = local.stream_name
 
   extended_s3_configuration {
-    buffer_interval     = var.buffer_interval
-    buffer_size         = var.buffer_size
+    buffering_interval  = var.buffering_interval
+    buffering_size      = var.buffering_size
     bucket_arn          = aws_s3_bucket.storage.arn
     error_output_prefix = "error/!{firehose:error-output-type}/"
     compression_format  = "GZIP"
