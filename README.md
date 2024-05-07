@@ -30,15 +30,15 @@ The main resources for this module are:
 | Name | Version |
 |------|---------|
 | archive | ~> 2.2 |
-| aws | >= 4.9.0 |
+| aws | >= 5.0.0 |
 | random | ~> 3.1 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| buffer\_interval | Buffer incoming data for the specified period of time, in seconds, before delivering it to the destination | `number` | `300` | no |
-| buffer\_size | Buffer incoming events to the specified size, in MBs, before delivering it to the destination | `number` | `5` | no |
+| buffering\_interval | Buffer incoming data for the specified period of time, in seconds, before delivering it to the destination | `number` | `300` | no |
+| buffering\_size | Buffer incoming events to the specified size, in MBs, before delivering it to the destination | `number` | `5` | no |
 | delete\_events\_when\_destroying\_stack | Whether to delete stored events when destroying the stack | `bool` | `false` | no |
 | events\_expiration\_days | Keep the events for this number of days | `number` | `365` | no |
 | logs\_retention\_days | Keep the logs for this number of days | `number` | `14` | no |
