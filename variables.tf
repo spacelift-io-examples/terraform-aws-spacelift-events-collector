@@ -1,10 +1,10 @@
-variable "buffer_interval" {
+variable "buffering_interval" {
   default     = 300
   description = "Buffer incoming data for the specified period of time, in seconds, before delivering it to the destination"
   type        = number
 }
 
-variable "buffer_size" {
+variable "buffering_size" {
   default     = 5
   description = "Buffer incoming events to the specified size, in MBs, before delivering it to the destination"
   type        = number
