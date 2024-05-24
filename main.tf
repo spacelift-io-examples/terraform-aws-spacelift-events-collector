@@ -37,7 +37,14 @@ resource "aws_lambda_function" "courier" {
   }
 }
 
+moved {
+  from = aws_lambda_function_url.courier
+  to   = aws_lambda_function_url.courier["enabled"]
+}
+
 resource "aws_lambda_function_url" "courier" {
+  for_each = local.each_commercial
+
   authorization_type = "NONE"
   function_name      = aws_lambda_function.courier.function_name
 }
@@ -104,8 +111,8 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
   name        = local.stream_name
 
   extended_s3_configuration {
-    buffer_interval     = var.buffer_interval
-    buffer_size         = var.buffer_size
+    buffering_interval  = var.buffer_interval
+    buffering_size      = var.buffer_size
     bucket_arn          = aws_s3_bucket.storage.arn
     error_output_prefix = "error/!{firehose:error-output-type}/"
     compression_format  = "GZIP"
