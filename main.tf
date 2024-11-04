@@ -25,7 +25,7 @@ resource "aws_lambda_function" "courier" {
   function_name    = local.courier_name
   handler          = "function.handler"
   role             = aws_iam_role.courier.arn
-  runtime          = "python3.9"
+  runtime          = "python${var.python_version}"
   source_code_hash = data.archive_file.lambda_function.output_base64sha256
 
   environment {
