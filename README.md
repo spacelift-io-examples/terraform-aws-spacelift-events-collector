@@ -43,6 +43,7 @@ The main resources for this module are:
 | events\_expiration\_days | Keep the events for this number of days | `number` | `365` | no |
 | logs\_retention\_days | Keep the logs for this number of days | `number` | `14` | no |
 | logs\_verbose | Include debug information in the logs | `bool` | `false` | no |
+| python\_version | AWS Lambda Python runtime version | `string` | `"3.9"` | no |
 | secret | Secret to be expected by the collector | `string` | `""` | no |
 
 ## Outputs

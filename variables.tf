@@ -34,6 +34,12 @@ variable "logs_verbose" {
   type        = bool
 }
 
+variable "python_version" {
+  default     = "3.9"
+  description = "AWS Lambda Python runtime version"
+  type        = string
+}
+
 variable "secret" {
   default     = ""
   description = "Secret to be expected by the collector"
