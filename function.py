@@ -6,7 +6,7 @@ import os
 
 def is_signature_valid(headers, payload, secret):
   signature = hmac.new(secret.encode("UTF-8"), payload.encode("UTF-8"), hashlib.sha256).hexdigest()
-  return hmac.compare_digest(f"sha256={signature}", headers["x-signature-256"])
+  return hmac.compare_digest(f"sha256={signature}", headers["X-Signature-256"])
 
 def handler(event, context):
   if os.getenv("VERBOSE") == "true":
