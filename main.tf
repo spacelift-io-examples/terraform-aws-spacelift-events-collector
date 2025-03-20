@@ -1,7 +1,7 @@
 locals {
   courier_name = "spacelift-events-collector-courier-${random_string.suffix.result}"
   stream_name  = "spacelift-events-collector-stream-${random_string.suffix.result}"
-  bucket_arn   = var.s3_bucket_arn == "" ? aws_s3_bucket.storage[0].arn : var.s3_bucket_arn
+  bucket_arn   = var.s3_bucket_name == null ? aws_s3_bucket.storage[0].arn : "arn:${data.aws_partition.current.partition}:s3:::${local.bucket_name}"
   bucket_name  = var.s3_bucket_name == "" ? aws_s3_bucket.storage[0].bucket : var.s3_bucket_name
 }
 
@@ -169,8 +169,8 @@ resource "aws_iam_role_policy" "stream" {
           "s3:PutObject"
         ],
         Resource = [
-          "arn:aws:s3:::${local.bucket_name}",
-          "arn:aws:s3:::${local.bucket_name}/*"
+          "${local.bucket_arn}",
+          "${local.bucket_arn}/*"
         ]
       },
       {
@@ -187,7 +187,7 @@ resource "aws_iam_role_policy" "stream" {
             "kms:ViaService" = "s3.region.amazonaws.com"
           },
           StringLike = {
-            "kms:EncryptionContext:aws:s3:arn" : "arn:aws:s3:::${local.bucket_name}/*"
+            "kms:EncryptionContext:aws:s3:arn" : "${local.bucket_arn}/*"
           }
         }
       },
