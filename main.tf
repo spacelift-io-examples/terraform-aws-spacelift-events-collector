@@ -1,6 +1,8 @@
 locals {
   courier_name = "spacelift-events-collector-courier-${random_string.suffix.result}"
   stream_name  = "spacelift-events-collector-stream-${random_string.suffix.result}"
+  bucket_arn   = var.s3_bucket_arn == "" ? aws_s3_bucket.storage[0].arn : var.s3_bucket_arn
+  bucket_name  = var.s3_bucket_name == "" ? aws_s3_bucket.storage[0].bucket : var.s3_bucket_name
 }
 
 resource "random_string" "suffix" {
@@ -113,7 +115,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
   extended_s3_configuration {
     buffering_interval  = var.buffer_interval
     buffering_size      = var.buffer_size
-    bucket_arn          = aws_s3_bucket.storage.arn
+    bucket_arn          = local.bucket_arn
     error_output_prefix = "error/!{firehose:error-output-type}/"
     compression_format  = "GZIP"
     kms_key_arn         = data.aws_kms_alias.s3.arn
@@ -167,8 +169,8 @@ resource "aws_iam_role_policy" "stream" {
           "s3:PutObject"
         ],
         Resource = [
-          "arn:aws:s3:::${aws_s3_bucket.storage.bucket}",
-          "arn:aws:s3:::${aws_s3_bucket.storage.bucket}/*"
+          "arn:aws:s3:::${local.bucket_name}",
+          "arn:aws:s3:::${local.bucket_name}/*"
         ]
       },
       {
@@ -185,7 +187,7 @@ resource "aws_iam_role_policy" "stream" {
             "kms:ViaService" = "s3.region.amazonaws.com"
           },
           StringLike = {
-            "kms:EncryptionContext:aws:s3:arn" : "arn:aws:s3:::${aws_s3_bucket.storage.bucket}/*"
+            "kms:EncryptionContext:aws:s3:arn" : "arn:aws:s3:::${local.bucket_name}/*"
           }
         }
       },
