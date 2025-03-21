@@ -1,12 +1,12 @@
 resource "aws_apigatewayv2_api" "this" {
-  for_each = local.each_govcloud
+  for_each = local.api_gw_enabled
 
   name          = local.courier_name
   protocol_type = "HTTP"
 }
 
 resource "aws_apigatewayv2_route" "this" {
-  for_each = local.each_govcloud
+  for_each = local.api_gw_enabled
 
   api_id    = aws_apigatewayv2_api.this[each.key].id
   route_key = "$default"
@@ -14,7 +14,7 @@ resource "aws_apigatewayv2_route" "this" {
 }
 
 resource "aws_lambda_permission" "this" {
-  for_each = local.each_govcloud
+  for_each = local.api_gw_enabled
 
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.courier.arn
@@ -24,7 +24,7 @@ resource "aws_lambda_permission" "this" {
 }
 
 resource "aws_apigatewayv2_integration" "this" {
-  for_each = local.each_govcloud
+  for_each = local.api_gw_enabled
 
   api_id           = aws_apigatewayv2_api.this[each.key].id
   integration_type = "AWS_PROXY"
@@ -37,7 +37,7 @@ resource "aws_apigatewayv2_integration" "this" {
 }
 
 resource "aws_apigatewayv2_stage" "this" {
-  for_each = local.each_govcloud
+  for_each = local.api_gw_enabled
 
   api_id      = aws_apigatewayv2_api.this[each.key].id
   auto_deploy = true
