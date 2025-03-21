@@ -37,6 +37,7 @@ The main resources for this module are:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| api\_gw\_enabled | Enable API Gateway in commercial partition | `bool` | `false` | no |
 | buffer\_interval | Buffer incoming data for the specified period of time, in seconds, before delivering it to the destination | `number` | `300` | no |
 | buffer\_size | Buffer incoming events to the specified size, in MBs, before delivering it to the destination | `number` | `5` | no |
 | delete\_events\_when\_destroying\_stack | Whether to delete stored events when destroying the stack | `bool` | `false` | no |
