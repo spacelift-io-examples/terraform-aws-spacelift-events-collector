@@ -1,6 +1,7 @@
 variable "api_gw_enabled" {
   default     = false
   description = "Install api gateway in commercial"
+  nullable    = false
   type        = bool
 }
 
