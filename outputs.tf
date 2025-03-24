@@ -5,7 +5,7 @@ output "courier_function_arn" {
 
 output "courier_url" {
   description = "The HTTP URL endpoint for the courier"
-  value       = local.is_govcloud || var.api_gw_enabled ? aws_apigatewayv2_stage.this["enabled"].invoke_url : aws_lambda_function_url.courier["enabled"].function_url
+  value       = local.api_gw_enabled ? aws_apigatewayv2_stage.this["enabled"].invoke_url : aws_lambda_function_url.courier["enabled"].function_url
 }
 
 output "storage_bucket_name" {
