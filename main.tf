@@ -2,7 +2,7 @@ locals {
   courier_name = "spacelift-events-collector-courier-${random_string.suffix.result}"
   stream_name  = "spacelift-events-collector-stream-${random_string.suffix.result}"
   bucket_arn   = var.s3_bucket_name == null ? aws_s3_bucket.storage[0].arn : "arn:${data.aws_partition.current.partition}:s3:::${local.bucket_name}"
-  bucket_name  = var.s3_bucket_name == "" ? aws_s3_bucket.storage[0].bucket : var.s3_bucket_name
+  bucket_name  = var.s3_bucket_name == null ? aws_s3_bucket.storage[0].bucket : var.s3_bucket_name
 }
 
 resource "random_string" "suffix" {
