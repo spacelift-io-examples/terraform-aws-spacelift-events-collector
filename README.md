@@ -44,6 +44,7 @@ The main resources for this module are:
 | logs\_retention\_days | Keep the logs for this number of days | `number` | `14` | no |
 | logs\_verbose | Include debug information in the logs | `bool` | `false` | no |
 | python\_version | AWS Lambda Python runtime version | `string` | `"3.9"` | no |
+| s3_bucket_name | Name of existing bucket for logs | `string` | `null` | no |
 | secret | Secret to be expected by the collector | `string` | `""` | no |
 
 ## Outputs
