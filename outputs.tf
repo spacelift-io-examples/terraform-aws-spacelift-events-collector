@@ -10,7 +10,6 @@ output "courier_url" {
 
 output "storage_bucket_name" {
   description = "The name for the S3 bucket that stores the events"
-  sensitive   = true
   value       = local.bucket_name
 }
 
