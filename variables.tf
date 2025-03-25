@@ -47,13 +47,6 @@ variable "secret" {
   type        = string
 }
 
-variable "s3_bucket_arn" {
-  default     = ""
-  description = "Arn for existing S3 bucket to use for Audit Logs"
-  sensitive   = true
-  type        = string
-}
-
 variable "s3_bucket_name" {
   default     = null
   description = "Name for existing S3 bucket to use for Audit Logs"
