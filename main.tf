@@ -43,7 +43,7 @@ moved {
 }
 
 resource "aws_lambda_function_url" "courier" {
-  for_each = local.each_commercial
+  for_each = local.function_url_enabled
 
   authorization_type = "NONE"
   function_name      = aws_lambda_function.courier.function_name
