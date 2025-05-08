@@ -118,7 +118,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream" {
     bucket_arn          = local.bucket_arn
     error_output_prefix = "error/!{firehose:error-output-type}/"
     compression_format  = "GZIP"
-    kms_key_arn         = data.aws_kms_alias.s3.arn
+    kms_key_arn         = var.s3_bucket_name == null ? data.aws_kms_alias.s3.arn : null
     prefix              = "year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/"
     role_arn            = aws_iam_role.stream.arn
 

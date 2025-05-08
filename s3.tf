@@ -18,6 +18,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
     abort_incomplete_multipart_upload {
       days_after_initiation = 1
     }
+    filter {
+      prefix = ""
+    }
   }
 
   rule {
@@ -26,6 +29,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
 
     expiration {
       days = var.events_expiration_days
+    }
+    filter {
+      prefix = ""
     }
   }
 }
