@@ -4,10 +4,12 @@ data "aws_kms_alias" "s3" {
 
 resource "aws_s3_bucket" "storage" {
   bucket = "spacelift-events-${random_string.suffix.result}"
+  count  = var.s3_bucket_name == null ? 1 : 0
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
-  bucket = aws_s3_bucket.storage.id
+  bucket = aws_s3_bucket.storage[0].id
+  count  = var.s3_bucket_name == null ? 1 : 0
 
   rule {
     id     = "abort-incomplete-multipart-upload"
@@ -15,6 +17,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
 
     abort_incomplete_multipart_upload {
       days_after_initiation = 1
+    }
+    filter {
+      prefix = ""
     }
   }
 
@@ -25,11 +30,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "cleanup" {
     expiration {
       days = var.events_expiration_days
     }
+    filter {
+      prefix = ""
+    }
   }
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "storage" {
-  bucket = aws_s3_bucket.storage.id
+  bucket = aws_s3_bucket.storage[0].id
+  count  = var.s3_bucket_name == null ? 1 : 0
 
   rule {
     bucket_key_enabled = true
