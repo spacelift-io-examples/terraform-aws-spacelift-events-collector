@@ -1,3 +1,10 @@
+variable "api_gw_enabled" {
+  default     = false
+  description = "Install api gateway in commercial"
+  nullable    = false
+  type        = bool
+}
+
 variable "buffer_interval" {
   default     = 300
   description = "Buffer incoming data for the specified period of time, in seconds, before delivering it to the destination"
